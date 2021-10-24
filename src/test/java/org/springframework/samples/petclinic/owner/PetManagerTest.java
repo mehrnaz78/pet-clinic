@@ -9,10 +9,7 @@ import org.springframework.samples.petclinic.utility.PetTimedCache;
 import org.springframework.samples.petclinic.visit.Visit;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -114,6 +111,17 @@ class PetManagerTest {
 
 	//	Mockisty, State Verification
 	@Test
+	public void Owner_without_pets_returns_empty_list_correctly() {
+		//	Mock object
+		Owner owner = mock(Owner.class);
+		given(owners.findById(10)).willReturn(owner);
+		given(owner.getPets()).willReturn(Collections.emptyList());
+		assertEquals(petManager.getOwnerPetTypes(10).size(), 0);
+	}
+
+
+	//	Mockisty, State Verification
+	@Test
 	public void PetTypes_of_owner_is_returned_correctly() {
 		// Dummy object
 		Pet pet = new Pet();
@@ -130,6 +138,7 @@ class PetManagerTest {
 		given(owner.getPets()).willReturn(ownerPets);
 		assertEquals(petManager.getOwnerPetTypes(10), petTypes);
 	}
+
 
 	//	Mockisty, State Verification
 	@Test
