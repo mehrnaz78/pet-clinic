@@ -10,6 +10,7 @@ import org.springframework.samples.petclinic.visit.Visit;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -102,7 +103,7 @@ class PetManagerTest {
 		// Dummy object
 		Pet pet = new Pet();
 		pet.setId(20);
-		List ownerPets = new ArrayList();
+		List<Pet> ownerPets = new ArrayList<>();
 		ownerPets.add(pet);
 		//	Mock object
 		Owner owner = mock(Owner.class);
@@ -119,11 +120,15 @@ class PetManagerTest {
 		PetType petType = new PetType();
 		petType.setName("Dog");
 		pet.setType(petType);
+		List<Pet> ownerPets = new ArrayList<>();
+		ownerPets.add(pet);
+		Set<PetType> petTypes = new HashSet<>();
+		petTypes.add(petType);
 		//	Mock object
 		Owner owner = mock(Owner.class);
 		given(owners.findById(10)).willReturn(owner);
-		given(owner.getPets()).willReturn(List.of(pet));
-		assertEquals(petManager.getOwnerPetTypes(10), Set.of(petType));
+		given(owner.getPets()).willReturn(ownerPets);
+		assertEquals(petManager.getOwnerPetTypes(10), petTypes);
 	}
 
 	//	Mockisty, State Verification
@@ -136,8 +141,10 @@ class PetManagerTest {
 		LocalDate e = LocalDate.of(2021, 12, 1);
 		LocalDate date = LocalDate.of(2021, 11, 30);
 		Visit visit = new Visit().setDate(date);
+		List<Visit> visits = new ArrayList<>();
+		visits.add(visit);
 		given(pets.get(20)).willReturn(pet);
-		given(pet.getVisitsBetween(s, e)).willReturn(visit);
+		given(pet.getVisitsBetween(s, e)).willReturn(visits);
 		assertEquals(petManager.getVisitsBetween(20, s, e).get(0).getDate(), date);
 	}
 }
