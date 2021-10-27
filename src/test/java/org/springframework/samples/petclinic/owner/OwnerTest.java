@@ -26,5 +26,6 @@ class OwnerTest {
 		given(pet.isNew()).willReturn(false);
 		owner.addPet(pet);
 		verify(pet, times(1)).setOwner(owner);
+		assertEquals(owner.getPets().size(), 0);
 	}
 }
