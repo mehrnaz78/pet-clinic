@@ -20,12 +20,10 @@ public class CustomerDependentPriceCalculator implements PriceCalculator {
         double totalPrice = 0;
         int discountCounter = 0;
         DateTime today = new DateTime();
-
         for (Pet pet : pets) {
             double price = 0;
             int age = Years.yearsBetween(new DateTime(pet.getBirthDate()), today).getYears();
             boolean isRare = pet.getType().getRare();
-
             if (isRare) {
                 price = basePricePerPet * BASE_RARE_COEF;
                 if (age <= INFANT_YEARS) {
@@ -41,10 +39,8 @@ public class CustomerDependentPriceCalculator implements PriceCalculator {
                 }
                 discountCounter++;
             }
-
             totalPrice += price;
         }
-
         if (discountCounter >= DISCOUNT_MIN_SCORE) {
             if (userType == UserType.NEW) {
                 totalPrice = (totalPrice * userType.discountRate) + baseCharge;
@@ -54,7 +50,6 @@ public class CustomerDependentPriceCalculator implements PriceCalculator {
         } else if(userType == UserType.GOLD) {
             totalPrice = (totalPrice * userType.discountRate) + baseCharge;
         }
-
         return totalPrice;
     }
 }
