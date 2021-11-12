@@ -31,7 +31,7 @@ public class SimplePriceCalculatorTest {
 	}
 
 	@Test
-	public void Price_for_new_user_is_calculated_correctly() {
+	public void Price_of_rare_pet_for_new_user_is_calculated_correctly() {
 		given(petType.getRare()).willReturn(true);
 		UserType userType = UserType.NEW;
 		double result = (baseCharge+(basePricePerPet*1.2))*(userType.discountRate);
@@ -39,7 +39,7 @@ public class SimplePriceCalculatorTest {
 	}
 
 	@Test
-	public void Price_for_silver_user_is_calculated_correctly() {
+	public void Price_of_usual_pet_for_silver_user_is_calculated_correctly() {
 		given(petType.getRare()).willReturn(false);
 		UserType userType = UserType.SILVER;
 		double result = baseCharge+(basePricePerPet);

@@ -30,7 +30,7 @@ public class CustomerDependentPriceCalculatorTest {
 	}
 
 	@Test
-	public void p1() {
+	public void Price_of_infant_rare_pet_for_new_user_is_calculated_correctly() {
 		given(petType.getRare()).willReturn(true);
 		pet.setBirthDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 11).getTime());
 		UserType userType = UserType.NEW;
@@ -39,7 +39,7 @@ public class CustomerDependentPriceCalculatorTest {
 	}
 
 	@Test
-	public void p2() {
+	public void Price_of_rare_pet_for_gold_user_is_calculated_correctly() {
 		given(petType.getRare()).willReturn(true);
 		pet.setBirthDate(new GregorianCalendar(2010, Calendar.FEBRUARY, 11).getTime());
 		UserType userType = UserType.GOLD;
@@ -48,7 +48,7 @@ public class CustomerDependentPriceCalculatorTest {
 	}
 
 	@Test
-	public void p3() {
+	public void Price_of_infant_usual_pet_for_new_user_is_calculated_correctly() {
 		given(petType.getRare()).willReturn(false);
 		pet.setBirthDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 11).getTime());
 		UserType userType = UserType.NEW;
@@ -57,7 +57,7 @@ public class CustomerDependentPriceCalculatorTest {
 	}
 
 	@Test
-	public void p4() {
+	public void Price_of_infant_usual_pets_for_new_user_is_calculated_correctly() {
 		given(petType.getRare()).willReturn(true);
 		List<Pet> pets = generateListOfPets();
 		UserType userType = UserType.NEW;
@@ -69,7 +69,7 @@ public class CustomerDependentPriceCalculatorTest {
 	}
 
 	@Test
-	public void p5() {
+	public void Price_of_infant_usual_pets_for_silver_user_is_calculated_correctly() {
 		given(petType.getRare()).willReturn(true);
 		List<Pet> pets = generateListOfPets();
 		UserType userType = UserType.SILVER;
