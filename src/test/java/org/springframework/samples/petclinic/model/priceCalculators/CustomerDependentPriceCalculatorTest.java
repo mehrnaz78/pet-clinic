@@ -6,9 +6,7 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.UserType;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -34,7 +32,7 @@ public class CustomerDependentPriceCalculatorTest {
 	@Test
 	public void p1() {
 		given(petType.getRare()).willReturn(true);
-		pet.setBirthDate(new Date(2021, 01, 10, 10, 10, 10));
+		pet.setBirthDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 11).getTime());
 		UserType userType = UserType.NEW;
 		double result = 1.4*(basePricePerPet*1.2);
 		assertThat(customerDependentPriceCalculator.calcPrice(List.of(pet), baseCharge, basePricePerPet, userType)).isEqualTo(result);
@@ -43,16 +41,16 @@ public class CustomerDependentPriceCalculatorTest {
 	@Test
 	public void p2() {
 		given(petType.getRare()).willReturn(true);
-		pet.setBirthDate(new Date(2010, 01, 10, 10, 10, 10));
+		pet.setBirthDate(new GregorianCalendar(2010, Calendar.FEBRUARY, 11).getTime());
 		UserType userType = UserType.GOLD;
-		double result = (1.4*(basePricePerPet*1.2))*userType.discountRate + baseCharge;
+		double result = (basePricePerPet*1.2)*userType.discountRate + baseCharge;
 		assertThat(customerDependentPriceCalculator.calcPrice(List.of(pet), baseCharge, basePricePerPet, userType)).isEqualTo(result);
 	}
 
 	@Test
 	public void p3() {
 		given(petType.getRare()).willReturn(false);
-		pet.setBirthDate(new Date(2021, 01, 10, 10, 10, 10));
+		pet.setBirthDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 11).getTime());
 		UserType userType = UserType.NEW;
 		double result = basePricePerPet*1.2;
 		assertThat(customerDependentPriceCalculator.calcPrice(List.of(pet), baseCharge, basePricePerPet, userType)).isEqualTo(result);
@@ -88,7 +86,7 @@ public class CustomerDependentPriceCalculatorTest {
 		for (int i=0; i<5; i++) {
 			Pet pet = new Pet();
 			pet.setType(petType);
-			pet.setBirthDate(new Date(2021, 01, 10, 10, 10, 10));
+			pet.setBirthDate(new GregorianCalendar(2020, Calendar.FEBRUARY, 11).getTime());
 			pets.add(pet);
 		}
 		return pets;
