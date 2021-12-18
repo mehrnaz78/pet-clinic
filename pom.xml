@@ -328,7 +328,19 @@
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>${pitest.version}</version>
+        <version>LATEST</version>
+        <configuration>
+          <targetClasses>
+            <param>
+              org.springframework.samples.petclinic.utility.PriceCalculator
+            </param>
+          </targetClasses>
+          <targetTests>
+            <param>
+              org.springframework.samples.petclinic.utility.PriceCalculatorTest
+            </param>
+          </targetTests>
+        </configuration>
         <reportSets>
           <reportSet>
             <reports>
