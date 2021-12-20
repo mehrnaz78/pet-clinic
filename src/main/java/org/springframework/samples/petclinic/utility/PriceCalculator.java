@@ -29,7 +29,7 @@ public class PriceCalculator {
 			long age = YEARS.between(pet.getBirthDate(), today);
 			long daysFromLastVisit = 0;
 			List<Visit> visits = new ArrayList<>(pet.getVisitsUntilAge((int) age));
-			if (visits.size() != 0)
+			if (visits.size() >= 1)
 				daysFromLastVisit = DAYS.between(visits.get(visits.size() - 1).getDate(), today);
 
 			price = basePricePerPet * BASE_RARE_COEF;

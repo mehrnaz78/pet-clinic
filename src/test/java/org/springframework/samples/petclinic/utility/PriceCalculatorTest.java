@@ -57,6 +57,13 @@ class PriceCalculatorTest {
 	}
 
 	@Test
+	public void ageEqualToInfantYear(){
+		pet.setBirthDate(LocalDate.of(2019, 3,12));
+		double price = basePricePerPet * BASE_RARE_COEF * RARE_INFANCY_COEF;
+		assertEquals(price, priceCalculator.calcPrice(pets, baseCharge, basePricePerPet));
+	}
+
+	@Test
 	public void havingDiscount(){
 		pet.setBirthDate(LocalDate.of(2020, 3,12));
 		pets.add(pet);
@@ -87,6 +94,30 @@ class PriceCalculatorTest {
 		pets.add(mockPet);
 		double pricePerPet = basePricePerPet * BASE_RARE_COEF * RARE_INFANCY_COEF;
 		double price = (pricePerPet * 4 + baseCharge) * 3 + pricePerPet;
+		assertEquals(price, priceCalculator.calcPrice(pets, baseCharge, basePricePerPet));
+	}
+
+	@Test
+	public void havingDiscountForMoreThan6PetsWithLastVisit(){
+		Pet mockPet = mock(Pet.class);
+
+		List<Visit> visits = new ArrayList<>();
+		Visit visit = new Visit();
+		visit.setDate(LocalDate.of(2021,4,12));
+		visits.add(visit);
+		visits.add(visit);
+
+		given(mockPet.getBirthDate()).willReturn(LocalDate.of(2020, 3,12));
+		given(mockPet.getVisitsUntilAge(1)).willReturn(visits);
+
+		pet.setBirthDate(LocalDate.of(2020, 3,12));
+		pets.add(pet);
+		pets.add(pet);
+		pets.add(pet);
+		pets.add(pet);
+		pets.add(mockPet);
+		double pricePerPet = basePricePerPet * BASE_RARE_COEF * RARE_INFANCY_COEF;
+		double price = ((pricePerPet * 4 * DISCOUNT_PRE_VISIT + 2 * baseCharge + pricePerPet) * 4 + pricePerPet);
 		assertEquals(price, priceCalculator.calcPrice(pets, baseCharge, basePricePerPet));
 	}
 
