@@ -1,16 +1,26 @@
 package bdd;
 
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.owner.*;
+import org.springframework.samples.petclinic.utility.PetTimedCache;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
-public class SampleFeatureSteps {
+public class PetServiceSteps {
 
 	PetService petService;
 
@@ -24,7 +34,7 @@ public class SampleFeatureSteps {
 	private Owner owner;
 	private Pet pet;
 
-	@Before("@PetService")
+	@Before
 	public void setup() {
 		petService = new PetService(pets, owners, log);
 	}
