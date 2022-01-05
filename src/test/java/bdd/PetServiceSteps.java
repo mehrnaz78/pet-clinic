@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
@@ -16,25 +17,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 public class PetServiceSteps {
 
 	PetService petService;
 
-	@MockBean
-	private OwnerRepository owners;
-	@MockBean
-	private PetTimedCache pets;
-	@MockBean
-	private Logger log;
+	private OwnerRepository owners = mock(OwnerRepository.class);
+	private PetTimedCache pets = mock(PetTimedCache.class);
+	private Logger log = mock(Logger.class);
 
 	private Owner owner;
 	private Pet pet;
 
-	@Before
+	@Given("Pet service is ready")
 	public void setup() {
 		petService = new PetService(pets, owners, log);
 	}
@@ -46,7 +43,7 @@ public class PetServiceSteps {
 	}
 
 	@Given("There is an owner with id = 1.")
-	public void thereAreSomeOwners(String name) {
+	public void thereAreSomeOwners() {
 		given(owners.findById(1)).willReturn(createOwner(1));
 		given(owners.findById(3)).willReturn(null);
 	}
@@ -58,7 +55,7 @@ public class PetServiceSteps {
 
 	@Then("The owner with id = 1 found successfully.")
 	public void assertFoundOwner() {
-		assertEquals(createOwner(1), owner);
+		Assertions.assertEquals(1, owner.getId());
 	}
 
 	@Then("The owner with id = 3 not found.")
@@ -88,7 +85,7 @@ public class PetServiceSteps {
 	}
 
 	@Given("There is a pet with id = 1.")
-	public void thereAreSomePets(String name) {
+	public void thereAreSomePets() {
 		given(pets.get(1)).willReturn(createPet(1));
 		given(pets.get(3)).willReturn(null);
 	}
@@ -100,7 +97,7 @@ public class PetServiceSteps {
 
 	@Then("The pet with id = 1 found successfully.")
 	public void assertFoundPet() {
-		assertEquals(createPet(1), pet);
+		Assertions.assertEquals(1, pet.getId());
 	}
 
 	@Then("The pet with id = 3 not found.")

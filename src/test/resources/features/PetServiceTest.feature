@@ -2,6 +2,7 @@
 Feature: PetService
 
   Background: Pet Service is working correctly
+    Given Pet service is ready
 
   Scenario: Find existing owner
     Given There is an owner with id = 1.
