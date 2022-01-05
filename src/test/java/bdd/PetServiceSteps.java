@@ -108,7 +108,7 @@ public class PetServiceSteps {
 	@Given("There is an owner and a pet.")
 	public void thereAreOwnerAndPet() {
 		owner = createOwner(1);
-		pet = createPet(1);
+		pet = new Pet();
 	}
 
 	@When("Pet is added to owner.")
